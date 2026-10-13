@@ -40,6 +40,7 @@ if (!string.IsNullOrEmpty(dtEndpoint))
 }
 
 var app = builder.Build();
+var logger = app.Logger;
 
 var dbConn = Environment.GetEnvironmentVariable("DATABASE_URL") ?? "";
 
@@ -58,16 +59,14 @@ app.MapGet("/payments", async () =>
     }
     catch (Exception ex)
     {
-        return Results.Problem($"Database error: {ex.Message}", statusCode: 500);
+        logger.LogError(ex, "Payment data request failed");
+        return Results.Problem("Payment data is temporarily unavailable.", statusCode: 500);
     }
 });
 
 app.MapPost("/payments/process", async () =>
 {
-    // Simulate payment processing with occasional failures
     await Task.Delay(Random.Shared.Next(100, 500));
-    if (Random.Shared.Next(100) < 5) // 5% failure rate
-        return Results.Problem("Payment gateway timeout", statusCode: 504);
     return Results.Ok(new { status = "processed", transactionId = Guid.NewGuid() });
 });
 

@@ -165,30 +165,3 @@ az network vnet subnet create -g <rg> --vnet-name vnet-<suffix> \
 ```
 
 Then in the SRE Agent portal, connect to the VNet using `snet-sre-agent`.
-
-## Break-it Scenarios
-
-After deploying, create realistic failures for the SRE Agent to investigate:
-
-```bash
-# Frontend goes down — users can't access the portal
-./scripts/break.sh <resource-group> stop-frontend
-
-# Order service dies — orders API returns 502
-./scripts/break.sh <resource-group> kill-order-service
-
-# Database blocked — both orders and payments return 500
-./scripts/break.sh <resource-group> block-db
-
-# Worker stops — orders created but never completed (queue backs up)
-./scripts/break.sh <resource-group> scale-down-worker
-
-# Gateway dies — frontend can't reach any backend
-./scripts/break.sh <resource-group> kill-gateway
-```
-
-## Restore
-
-```bash
-./scripts/fix.sh <resource-group>
-```

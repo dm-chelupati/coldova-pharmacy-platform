@@ -39,6 +39,7 @@ if (!string.IsNullOrEmpty(dtEndpoint))
 
 builder.Services.AddHttpClient();
 var app = builder.Build();
+var logger = app.Logger;
 
 var orderUrl = Environment.GetEnvironmentVariable("ORDER_SERVICE_URL") ?? "http://localhost:8081";
 var paymentUrl = Environment.GetEnvironmentVariable("PAYMENT_SERVICE_URL") ?? "http://localhost:8082";
@@ -56,7 +57,8 @@ app.MapGet("/api/orders", async (IHttpClientFactory http) =>
     }
     catch (Exception ex)
     {
-        return Results.Problem($"Order service error: {ex.Message}", statusCode: 502);
+        logger.LogError(ex, "Order request failed");
+        return Results.Problem("Order processing is temporarily unavailable.", statusCode: 502);
     }
 });
 
@@ -72,7 +74,8 @@ app.MapGet("/api/payments", async (IHttpClientFactory http) =>
     }
     catch (Exception ex)
     {
-        return Results.Problem($"Payment service error: {ex.Message}", statusCode: 502);
+        logger.LogError(ex, "Payment request failed");
+        return Results.Problem("Payment processing is temporarily unavailable.", statusCode: 502);
     }
 });
 

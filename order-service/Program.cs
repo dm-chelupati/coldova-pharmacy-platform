@@ -62,7 +62,7 @@ app.MapGet("/orders", async () =>
     catch (Exception ex)
     {
         logger.LogError(ex, "Database error on GET /orders: {ErrorMessage}", ex.Message);
-        return Results.Problem($"Database error: {ex.Message}", statusCode: 500);
+        return Results.Problem("Order data is temporarily unavailable.", statusCode: 500);
     }
 });
 
@@ -82,7 +82,7 @@ app.MapPost("/orders", async () =>
     catch (Exception ex)
     {
         logger.LogError(ex, "Queue error on POST /orders: {ErrorMessage}", ex.Message);
-        return Results.Problem($"Queue error: {ex.Message}", statusCode: 500);
+        return Results.Problem("The order could not be submitted.", statusCode: 500);
     }
 });
 

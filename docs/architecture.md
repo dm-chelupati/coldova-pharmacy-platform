@@ -26,7 +26,6 @@ User → frontend (App Service)
 ## Common Failure Modes
 
 ### 5xx Errors
-- **Payment gateway timeout (504)**: payment-service has a 5% simulated failure rate. If you see sustained 504s, check if the rate exceeds baseline.
 - **Database connection failures**: PostgreSQL connection pool exhaustion under load. Check `DATABASE_URL` connectivity and connection count.
 - **Service Bus failures**: If worker can't connect to Service Bus, orders queue up. Check SERVICEBUS_CONNECTION env var.
 - **OOM kills**: Container Apps have memory limits. Check restart count and memory metrics.
@@ -42,4 +41,3 @@ User → frontend (App Service)
 - **Correlate with deployments**: Check `az containerapp revision list` for recent revisions and their creation times.
 - **Source code analysis**: If the trace points to a specific endpoint, examine the source code for that handler in the GitHub repo.
 - **Mitigation in Azure**: For deployment issues, suggest rollback via `az containerapp revision activate`. For config issues, suggest `az containerapp update` with corrected env vars.
-
