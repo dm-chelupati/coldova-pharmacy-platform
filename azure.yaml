@@ -1,6 +1,6 @@
-name: contoso-trading
+name: coldova-pharmacy-platform
 metadata:
-  template: contoso-trading@1.0.0
+  template: coldova-pharmacy-platform@1.0.0
 
 # Multi-service order processing platform
 # Frontend (App Service) → Gateway (Container App) → Order Service → Payment Service → Worker

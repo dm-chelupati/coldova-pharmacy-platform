@@ -1,6 +1,6 @@
-# Contoso Trading
+# Coldova Pharmacy Operations
 
-Multi-service order processing platform for testing Azure SRE Agent. Deploys 5 services with a database, message queue, and monitoring — then break things and see if the agent can diagnose them.
+Coldova Pharmacy's multi-service prescription order processing platform for demonstrating governed Azure SRE Agent operations. It deploys five services with a database, message queue, and monitoring.
 
 Supports two deployment modes: **standard** (public endpoints) and **VNet-integrated** (private, network-isolated).
 

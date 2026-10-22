@@ -1,4 +1,4 @@
-# Contoso Trading — Architecture & Dependencies
+# Coldova Pharmacy Operations — Architecture & Dependencies
 
 ## Services
 | Service | Type | Host | Port | Dependencies |

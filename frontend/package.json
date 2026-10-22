@@ -1,5 +1,5 @@
 {
-  "name": "contoso-trading-frontend",
+  "name": "coldova-pharmacy-frontend",
   "version": "1.0.0",
   "scripts": { "start": "node -r ./tracing.js server.js" },
   "dependencies": {

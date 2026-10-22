@@ -6,7 +6,7 @@ const gatewayUrl = process.env.GATEWAY_URL || 'http://localhost:8080';
 app.get('/health', (req, res) => res.json({ status: 'healthy', service: 'frontend' }));
 
 app.get('/', (req, res) => res.json({
-  service: 'Contoso Trading - Frontend',
+  service: 'Coldova Pharmacy Operations',
   gateway: gatewayUrl,
   endpoints: ['/orders', '/payments', '/health']
 }));
