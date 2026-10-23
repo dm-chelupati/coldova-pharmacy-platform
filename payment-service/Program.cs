@@ -51,7 +51,7 @@ app.MapGet("/payments", async () =>
     try
     {
         if (string.IsNullOrEmpty(dbConn))
-            return Results.Ok(new { payments = new[] { new { id = 1, amount = 99.99, status = "completed" } }, source = "mock" });
+            return Results.Problem("Payment processing is temporarily unavailable.", statusCode: 503);
 
         await using var conn = new NpgsqlConnection(dbConn);
         await conn.OpenAsync();
