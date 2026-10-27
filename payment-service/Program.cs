@@ -42,7 +42,7 @@ if (!string.IsNullOrEmpty(dtEndpoint))
 var app = builder.Build();
 var logger = app.Logger;
 
-var dbConn = Environment.GetEnvironmentVariable("DATABASE_URL") ?? "";
+var dbConn = Environment.GetEnvironmentVariable("PAYMENT_DATABASE_URL") ?? "";
 
 app.MapGet("/health", () => Results.Ok(new { status = "healthy", service = "payment-service" }));
 
