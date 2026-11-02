@@ -118,6 +118,7 @@ When VNet is enabled, Azure Firewall provides:
 | Gateway | Container App (.NET) | Routes requests to backend services |
 | Order Service | Container App (.NET) | Creates orders, publishes to queue |
 | Payment Service | Container App (.NET) | Processes payments |
+| Benefits Service | Container App (.NET) | Provides the optional pharmacy-benefits eligibility lookup |
 | Worker | Container App (.NET) | Consumes queue, completes orders |
 | Database | PostgreSQL Flexible Server | Shared order + payment data |
 | Service Bus | Standard tier | Async order processing pipeline |

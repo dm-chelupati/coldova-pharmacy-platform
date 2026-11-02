@@ -7,6 +7,10 @@ using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplicationInsightsTelemetry();
+builder.Services.AddHttpClient("benefits-eligibility", client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(5);
+});
 // Dynatrace OTLP export — traces + metrics + logs (active when DT_OTLP_ENDPOINT is set)
 var dtEndpoint = Environment.GetEnvironmentVariable("DT_OTLP_ENDPOINT");
 var dtToken = Environment.GetEnvironmentVariable("DT_OTLP_TOKEN");
@@ -43,20 +47,27 @@ var app = builder.Build();
 var logger = app.Logger;
 
 var dbConn = Environment.GetEnvironmentVariable("DATABASE_URL") ?? "";
+var benefitsApiUrl = Environment.GetEnvironmentVariable("BENEFITS_API_URL")?.TrimEnd('/');
 
 app.MapGet("/health", () => Results.Ok(new { status = "healthy", service = "payment-service" }));
 
-app.MapGet("/payments", async () =>
+app.MapGet("/payments", async (IHttpClientFactory httpClientFactory) =>
 {
     try
     {
+        if (!string.IsNullOrEmpty(benefitsApiUrl))
+        {
+            var benefitsClient = httpClientFactory.CreateClient("benefits-eligibility");
+            using var eligibilityResponse = await benefitsClient.GetAsync($"{benefitsApiUrl}/eligibility/1");
+            eligibilityResponse.EnsureSuccessStatusCode();
+        }
+
         if (string.IsNullOrEmpty(dbConn) ||
             !string.Equals(
                 new NpgsqlConnectionStringBuilder(dbConn).Database,
                 "tradingdb",
                 StringComparison.OrdinalIgnoreCase))
         {
-            logger.LogWarning("Payment response source anomaly: {Source}", "mock");
             return Results.Ok(new { payments = new[] { new { id = 1, amount = 99.99, status = "completed" } }, source = "mock" });
         }
 
