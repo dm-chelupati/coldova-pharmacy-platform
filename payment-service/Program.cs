@@ -55,7 +55,10 @@ app.MapGet("/payments", async () =>
                 new NpgsqlConnectionStringBuilder(dbConn).Database,
                 "tradingdb",
                 StringComparison.OrdinalIgnoreCase))
+        {
+            logger.LogWarning("Payment response source anomaly: {Source}", "mock");
             return Results.Ok(new { payments = new[] { new { id = 1, amount = 99.99, status = "completed" } }, source = "mock" });
+        }
 
         await using var conn = new NpgsqlConnection(dbConn);
         await conn.OpenAsync();
