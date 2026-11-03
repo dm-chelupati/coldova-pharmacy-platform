@@ -47,7 +47,6 @@ var app = builder.Build();
 var logger = app.Logger;
 
 var dbConn = Environment.GetEnvironmentVariable("DATABASE_URL") ?? "";
-var paymentDatabaseName = Environment.GetEnvironmentVariable("PAYMENT_DATABASE_NAME") ?? "";
 var benefitsApiUrl = Environment.GetEnvironmentVariable("BENEFITS_API_URL")?.TrimEnd('/');
 
 app.MapGet("/health", () => Results.Ok(new { status = "healthy", service = "payment-service" }));
@@ -64,10 +63,9 @@ app.MapGet("/payments", async (IHttpClientFactory httpClientFactory) =>
         }
 
         if (string.IsNullOrEmpty(dbConn) ||
-            string.IsNullOrEmpty(paymentDatabaseName) ||
             !string.Equals(
                 new NpgsqlConnectionStringBuilder(dbConn).Database,
-                paymentDatabaseName,
+                "tradingdb",
                 StringComparison.OrdinalIgnoreCase))
         {
             return Results.Ok(new { payments = new[] { new { id = 1, amount = 99.99, status = "completed" } }, source = "mock" });
