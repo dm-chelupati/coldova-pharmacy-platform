@@ -65,7 +65,7 @@ app.MapGet("/payments", async (IHttpClientFactory httpClientFactory) =>
         if (string.IsNullOrEmpty(dbConn) ||
             !string.Equals(
                 new NpgsqlConnectionStringBuilder(dbConn).Database,
-                "tradingdb",
+                "pharmacydb",
                 StringComparison.OrdinalIgnoreCase))
         {
             return Results.Ok(new { payments = new[] { new { id = 1, amount = 99.99, status = "completed" } }, source = "mock" });
