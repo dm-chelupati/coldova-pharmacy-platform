@@ -1,0 +1,506 @@
+{
+ "brand": "Caldova cloud operations",
+ "date_label": "Nov 6, 2026",
+ "title_meta": "Caldova morning digest 2026-11-06",
+ "page1": {
+  "eyebrow": "MORNING DIGEST  |  NOV 6, 2026  |  OVERNIGHT, 21:00\u201315:00 UTC",
+  "title": "SRE Agent fixed two payment incidents overnight",
+  "subtitle": "Orders stayed healthy all night. Both fixes used a pre-approved action, and the permanent fix is filed.",
+  "kpis": [
+   {
+    "value": "2",
+    "label": "fixed by SRE Agent",
+    "tone": "green",
+    "highlight": true
+   },
+   {
+    "value": "3 min",
+    "label": "alert to fix"
+   },
+   {
+    "value": "100%",
+    "label": "orders, overnight"
+   },
+   {
+    "value": "100%",
+    "label": "payments, last 30m"
+   }
+  ],
+  "trend": {
+   "title": "Success rate, 30-minute windows",
+   "series": [
+    {
+     "name": "Orders",
+     "color": "SKY",
+     "points": [
+      [
+       0.25,
+       100.0
+      ],
+      [
+       0.75,
+       100.0
+      ],
+      [
+       1.25,
+       100.0
+      ],
+      [
+       1.75,
+       100.0
+      ],
+      [
+       2.25,
+       100.0
+      ],
+      [
+       2.75,
+       100.0
+      ],
+      [
+       3.25,
+       100.0
+      ],
+      [
+       3.75,
+       100.0
+      ],
+      [
+       4.25,
+       100.0
+      ],
+      [
+       4.75,
+       100.0
+      ],
+      [
+       5.25,
+       100.0
+      ],
+      [
+       5.75,
+       100.0
+      ],
+      [
+       6.25,
+       100.0
+      ],
+      [
+       6.75,
+       100.0
+      ],
+      [
+       7.25,
+       100.0
+      ],
+      [
+       7.75,
+       100.0
+      ],
+      [
+       8.25,
+       100.0
+      ],
+      [
+       8.75,
+       100.0
+      ],
+      [
+       9.25,
+       100.0
+      ],
+      [
+       9.75,
+       100.0
+      ],
+      [
+       10.25,
+       100.0
+      ],
+      [
+       10.75,
+       100.0
+      ],
+      [
+       11.25,
+       100.0
+      ],
+      [
+       11.75,
+       100.0
+      ],
+      [
+       12.25,
+       100.0
+      ],
+      [
+       12.75,
+       100.0
+      ],
+      [
+       13.25,
+       100.0
+      ],
+      [
+       13.75,
+       100.0
+      ],
+      [
+       14.25,
+       100.0
+      ],
+      [
+       14.75,
+       100.0
+      ],
+      [
+       15.25,
+       100.0
+      ],
+      [
+       15.75,
+       100.0
+      ],
+      [
+       16.25,
+       100.0
+      ],
+      [
+       16.75,
+       100.0
+      ],
+      [
+       17.25,
+       100.0
+      ],
+      [
+       17.75,
+       100.0
+      ]
+     ],
+     "lw": 2.0
+    },
+    {
+     "name": "Payments",
+     "color": "TEAL",
+     "points": [
+      [
+       1.75,
+       95.9
+      ],
+      [
+       2.25,
+       0.0
+      ],
+      [
+       2.75,
+       null
+      ],
+      [
+       3.25,
+       0.2
+      ],
+      [
+       3.75,
+       23.7
+      ],
+      [
+       4.25,
+       19.6
+      ],
+      [
+       4.75,
+       19.6
+      ],
+      [
+       5.25,
+       100.0
+      ],
+      [
+       5.75,
+       null
+      ],
+      [
+       6.25,
+       100.0
+      ],
+      [
+       6.75,
+       24.0
+      ],
+      [
+       7.25,
+       8.1
+      ],
+      [
+       7.75,
+       96.6
+      ],
+      [
+       8.25,
+       97.3
+      ],
+      [
+       8.75,
+       99.8
+      ],
+      [
+       9.25,
+       89.2
+      ],
+      [
+       9.75,
+       64.7
+      ],
+      [
+       10.25,
+       83.3
+      ],
+      [
+       10.75,
+       99.0
+      ],
+      [
+       11.25,
+       99.2
+      ],
+      [
+       11.75,
+       95.9
+      ],
+      [
+       12.25,
+       89.3
+      ],
+      [
+       12.75,
+       91.1
+      ],
+      [
+       13.25,
+       48.3
+      ],
+      [
+       13.75,
+       90.4
+      ],
+      [
+       14.25,
+       0.0
+      ],
+      [
+       14.75,
+       93.5
+      ],
+      [
+       15.25,
+       99.2
+      ],
+      [
+       15.75,
+       94.7
+      ],
+      [
+       16.25,
+       94.4
+      ],
+      [
+       16.75,
+       94.7
+      ],
+      [
+       17.25,
+       99.0
+      ],
+      [
+       17.75,
+       100.0
+      ]
+     ],
+     "lw": 2.4,
+     "dots": true
+    }
+   ],
+   "bands": [
+    {
+     "x0": 2.0,
+     "x1": 5.0,
+     "label": ""
+    }
+   ],
+   "markers": [
+    {
+     "x": 7.48,
+     "y": 97
+    },
+    {
+     "x": 8.05,
+     "y": 97
+    }
+   ],
+   "marker_label": {
+    "text": "SRE Agent fixes\n04:29 and 05:03",
+    "x": 7.9,
+    "y": 93,
+    "tx": 11.3,
+    "ty": 36
+   },
+   "xlim": [
+    0,
+    18
+   ],
+   "xticks": [
+    [
+     0,
+     "21:00"
+    ],
+    [
+     3,
+     "00:00"
+    ],
+    [
+     6,
+     "03:00"
+    ],
+    [
+     9,
+     "06:00"
+    ],
+    [
+     12,
+     "09:00"
+    ],
+    [
+     15,
+     "12:00"
+    ],
+    [
+     18,
+     "15:00"
+    ]
+   ],
+   "caption": "Shaded: upstream outage outside Azure. Gaps: no payment traffic. Daytime dips self-resolved."
+  },
+  "handled_title": "Handled by SRE Agent",
+  "incidents": [
+   {
+    "tone": "green",
+    "chip": "Mitigated by SRE Agent",
+    "when": "04:00 and 04:57 UTC",
+    "title": "Stuck data sync blocked payments",
+    "actions": [
+     {
+      "text": "04:29  Ended stuck sync, recovered 04:30",
+      "thread_url": "https://sre.azure.com/agents/subscriptions/4e6f68bd-b1ea-415f-a65b-ef4a41c9e124/resourceGroups/rg-caldova-pharmacy-ops-sre/providers/Microsoft.App/agents/caldova-pharmacy-ops-sre/views/thread/91c84652-dfd9-4bcf-aa91-fd7e64c6d315"
+     },
+     {
+      "text": "05:03  Ended stuck sync, recovered 05:04",
+      "thread_url": "https://sre.azure.com/agents/subscriptions/4e6f68bd-b1ea-415f-a65b-ef4a41c9e124/resourceGroups/rg-caldova-pharmacy-ops-sre/providers/Microsoft.App/agents/caldova-pharmacy-ops-sre/views/thread/f767e1fa-cb43-4b4f-b952-da8b292834b3"
+     }
+    ],
+    "prevent_label": "Prevent recurrence",
+    "issue_label": "Issue #33",
+    "issue_url": "https://github.com/dm-chelupati/coldova-pharmacy-platform/issues/33",
+    "prevent": [
+     "Payments: circuit breaker + cached eligibility",
+     "Sync: small batched commits, snapshot reads"
+    ],
+    "height": 2.33
+   },
+   {
+    "tone": "blue",
+    "chip": "Investigated, self-resolved",
+    "when": "06:00\u201314:15 UTC",
+    "title": "8 short benefits-error alerts",
+    "actions": [
+     {
+      "text": "Diagnosed each; cause is outside Azure",
+      "thread_url": "https://sre.azure.com/agents/subscriptions/4e6f68bd-b1ea-415f-a65b-ef4a41c9e124/resourceGroups/rg-caldova-pharmacy-ops-sre/providers/Microsoft.App/agents/caldova-pharmacy-ops-sre/views/thread/cf263778-d78b-4b4f-85ca-071d459152eb",
+      "thread_label": "Latest"
+     }
+    ],
+    "prevent_label": "Prevent recurrence",
+    "issue_label": "Issue #30",
+    "issue_url": "https://github.com/dm-chelupati/coldova-pharmacy-platform/issues/30",
+    "prevent": [
+     "Add App Insights to the benefits app",
+     "Benefits owner: fix on-prem 404s"
+    ],
+    "height": 2.04
+   }
+  ],
+  "footer": "Sources: App Insights gateway requests, Nov 5 21:00 to Nov 6 15:00 UTC; incident threads; issues #30 and #33."
+ },
+ "page2": {
+  "eyebrow": "RECOMMENDATIONS  |  FOR OWNERS TO PRIORITIZE",
+  "title": "Security and cost: what to prioritize next",
+  "subtitle": "Found in the agent's daily review. Each is evidence-backed, owned and tracked; changes stay owner-approved.",
+  "columns": [
+   {
+    "title": "Security",
+    "tone": "navy",
+    "kpi": "1 critical CVE  |  3 P1s",
+    "rows": [
+     {
+      "chip": "P1",
+      "title": "Rebuild the payment image and rescan",
+      "why": "1 critical (zlib) and 34 high CVEs on the verified running image",
+      "owner": "Payment app owner",
+      "issue_label": "#27",
+      "issue_url": "https://github.com/dm-chelupati/coldova-pharmacy-platform/issues/27"
+     },
+     {
+      "chip": "P1",
+      "title": "Add WAF and rate limits at the edge",
+      "why": "Gateway and frontend are public, with no IP rules or WAF",
+      "owner": "Network owner",
+      "issue_label": "#26",
+      "issue_url": "https://github.com/dm-chelupati/coldova-pharmacy-platform/issues/26"
+     },
+     {
+      "chip": "P1",
+      "title": "Make the database and registries private",
+      "why": "Public access with passwords and registry admin keys",
+      "owner": "Security lead",
+      "issue_label": "#25",
+      "issue_url": "https://github.com/dm-chelupati/coldova-pharmacy-platform/issues/25"
+     }
+    ]
+   },
+   {
+    "title": "Cost",
+    "tone": "teal",
+    "kpi": "$524/mo  |  $84/yr validated",
+    "rows": [
+     {
+      "chip": "Validated",
+      "title": "Scale the idle staging web app to zero",
+      "why": "0 requests in 15 days; $7.04/month, $84/year if unchanged",
+      "owner": "Staging owner",
+      "issue_label": "#31",
+      "issue_url": "https://github.com/dm-chelupati/coldova-pharmacy-platform/issues/31"
+     },
+     {
+      "chip": "Review",
+      "tone": "blue",
+      "title": "Review SRE agent usage",
+      "why": "$353 of $524/month (67%); allocation check, not savings",
+      "owner": "Platform lead",
+      "issue_label": "#31",
+      "issue_url": "https://github.com/dm-chelupati/coldova-pharmacy-platform/issues/31"
+     },
+     {
+      "chip": "Trend",
+      "tone": "green",
+      "title": "Right-size gateway replicas",
+      "why": "Replicas doubled on flat traffic; set 2\u20134 and fix slow calls",
+      "owner": "Platform lead",
+      "issue_label": "#33",
+      "issue_url": "https://github.com/dm-chelupati/coldova-pharmacy-platform/issues/33"
+     }
+    ]
+   }
+  ],
+  "footer": "Sources: Trivy scan Nov 5, image digest verified Nov 6; billed usage Oct 22\u2013Nov 5; Azure Monitor metrics Oct 30\u2013Nov 5."
+ }
+}
