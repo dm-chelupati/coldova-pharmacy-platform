@@ -1,0 +1,76 @@
+{
+  "$schema": "https://github.com/Azure/data-api-builder/releases/latest/download/dab.draft.schema.json",
+  "data-source": {
+    "database-type": "mssql",
+    "connection-string": "@env('MSSQL_CONNECTION_STRING')"
+  },
+  "runtime": {
+    "rest": {
+      "enabled": false
+    },
+    "graphql": {
+      "enabled": false
+    },
+    "host": {
+      "mode": "production"
+    },
+    "mcp": {
+      "enabled": true,
+      "path": "/mcp",
+      "allowed-hosts": [
+        "sql-automation-mcp",
+        "localhost",
+        "127.0.0.1"
+      ],
+      "dml-tools": {
+        "describe-entities": false,
+        "create-record": false,
+        "read-records": false,
+        "update-record": false,
+        "delete-record": false,
+        "execute-entity": false,
+        "aggregate-records": false
+      }
+    }
+  },
+  "entities": {
+    "TerminateStalledBenefitsSync": {
+      "source": {
+        "object": "dbo.TerminateStalledBenefitsSync",
+        "type": "stored-procedure"
+      },
+      "description": "Terminates only the uniquely identified stalled nightly benefits-sync session after all server-enforced identity, age, blocking, table-lock, and overnight-window guardrails pass.",
+      "permissions": [
+        {
+          "actions": [
+            "execute"
+          ],
+          "role": "anonymous"
+        }
+      ],
+      "mcp": {
+        "dml-tools": false,
+        "custom-tool": true
+      }
+    },
+    "TerminateApprovedDemoTransaction": {
+      "source": {
+        "object": "dbo.TerminateApprovedDemoTransaction",
+        "type": "stored-procedure"
+      },
+      "description": "Terminates only the uniquely identified operator-triggered demo transaction after SQL Server verifies its identity, age, WAITFOR state, critical-table lock, and active customer blocking.",
+      "permissions": [
+        {
+          "actions": [
+            "execute"
+          ],
+          "role": "anonymous"
+        }
+      ],
+      "mcp": {
+        "dml-tools": false,
+        "custom-tool": true
+      }
+    }
+  }
+}

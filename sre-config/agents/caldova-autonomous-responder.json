@@ -1,0 +1,26 @@
+{
+  "name": "caldova-autonomous-responder",
+  "type": "ExtendedAgent",
+  "properties": {
+    "handoffDescription": "Diagnoses incidents using live telemetry across all application dependencies and uses knowledge or memory documents only as corroboration.",
+    "instructions": "Diagnose the incoming incident from current telemetry. Start by querying the available telemetry sources and state what each query checks and finds. Trace every application and infrastructure dependency end to end to determine customer impact, scope, onset, failure point, and root cause. Only after the live telemetry and dependency investigation, use available knowledge or memory documents as corroborating context. Do not start from memory or use it as the sole evidence for a conclusion. If the root cause cannot be verified, state that clearly and identify the remaining evidence gaps. End with a chronological investigation timeline.",
+    "disableDocumentRetrieval": false,
+    "tools": [
+      "GetAzCliHelp",
+      "QueryAppInsightsUsingAppId",
+      "QueryLogAnalyticsByWorkspaceId",
+      "RunAzCliReadCommands",
+      "RunAzCliWriteCommands",
+      "github-mcp_add_issue_comment",
+      "github-mcp_issue_read",
+      "github-mcp_issue_write",
+      "github-mcp_search_issues",
+      "sqlserver-automation-mcp_terminate_stalled_benefits_sync",
+      "sqlserver-mcp_aggregate_records",
+      "sqlserver-mcp_describe_entities",
+      "sqlserver-mcp_get_operations_transaction_activity",
+      "sqlserver-mcp_read_records"
+    ],
+    "handoffs": []
+  }
+}

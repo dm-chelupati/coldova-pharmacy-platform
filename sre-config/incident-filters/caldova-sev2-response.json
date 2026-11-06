@@ -1,0 +1,32 @@
+{
+  "name": "Caldova Sev2 Response",
+  "type": "IncidentFilter",
+  "tags": [],
+  "properties": {
+    "incidentPlatform": "AzMonitor",
+    "impactedService": "",
+    "priorities": [
+      "Sev2"
+    ],
+    "incidentType": "",
+    "alertId": "",
+    "titleContains": "Caldova Sev2 Alert",
+    "titleContainsAll": [],
+    "titleContainsAny": [],
+    "titleNotContains": [],
+    "agentMode": "autonomous",
+    "handlingAgent": "caldova-incident-responder",
+    "handlingAgents": null,
+    "owningTeamId": "",
+    "owningTeamIds": [],
+    "maxAutomatedInvestigationAttempts": 3,
+    "mergeEnabled": true,
+    "mergeWindowHours": 3,
+    "isEnabled": true,
+    "icmFilterSettings": null,
+    "azMonitorFilterSettings": {
+      "targetResourceType": "",
+      "targetResource": ""
+    }
+  }
+}

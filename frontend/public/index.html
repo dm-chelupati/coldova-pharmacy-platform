@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Caldova Pharmacy prescriptions, care, and everyday health.">
+  <title>Caldova Pharmacy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="utility-bar">
+      <div class="shell utility-content">
+        <span>Care that keeps up with you</span>
+        <div>
+          <a href="#services">Find care</a>
+          <a href="#benefits">Check benefits</a>
+        </div>
+      </div>
+    </div>
+    <div class="shell nav-row">
+      <a class="brand" href="/" aria-label="Caldova Pharmacy home">
+        <span class="brand-mark" aria-hidden="true">C</span>
+        <span>Caldova <strong>Pharmacy</strong></span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#shop">Shop</a>
+        <a href="#prescriptions">Prescriptions</a>
+        <a href="#services">Health services</a>
+      </nav>
+      <button class="cart-button" type="button" aria-label="View cart">
+        <span>Cart</span>
+        <span class="cart-count">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Pharmacy, simplified</span>
+          <h1>Your health essentials, all in one place.</h1>
+          <p>Refill prescriptions, confirm benefits, and shop trusted everyday care with one connected pharmacy experience.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#shop">Shop health essentials</a>
+            <a class="button button-secondary" href="#prescriptions">Manage prescriptions</a>
+          </div>
+          <div class="trust-row" aria-label="Service highlights">
+            <span>Same-day pickup</span>
+            <span>Pharmacist support</span>
+            <span>Secure benefits check</span>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Caldova connected care">
+          <div class="care-card care-card-main">
+            <span class="card-label">Next refill</span>
+            <strong>Ready for review</strong>
+            <p>Losartan 50 mg</p>
+            <div class="progress-track"><span></span></div>
+            <small>3 days remaining</small>
+          </div>
+          <div class="care-card care-card-float">
+            <span class="pulse-dot"></span>
+            <div><strong>Benefits connected</strong><small>Coldova Plus</small></div>
+          </div>
+          <div class="pharmacy-symbol" aria-hidden="true">
+            <span></span><span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quick-actions shell" aria-label="Pharmacy quick actions">
+      <article>
+        <span class="action-icon">Rx</span>
+        <div><strong>Refill a prescription</strong><p>Request in under a minute</p></div>
+        <a href="#prescriptions" aria-label="Refill a prescription">Go</a>
+      </article>
+      <article>
+        <span class="action-icon">24</span>
+        <div><strong>Talk to a pharmacist</strong><p>Expert support, every day</p></div>
+        <a href="#services" aria-label="Talk to a pharmacist">Go</a>
+      </article>
+      <article>
+        <span class="action-icon">+</span>
+        <div><strong>Schedule care</strong><p>Vaccines and wellness visits</p></div>
+        <a href="#services" aria-label="Schedule care">Go</a>
+      </article>
+    </section>
+
+    <section class="section shell" id="shop">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Everyday care</span>
+          <h2>Health essentials for every routine</h2>
+        </div>
+        <label class="search-box">
+          <span class="sr-only">Search products</span>
+          <input id="product-search" type="search" placeholder="Search products">
+        </label>
+      </div>
+      <div class="category-pills" id="categories" aria-label="Product categories"></div>
+      <div class="product-grid" id="product-grid" aria-live="polite">
+        <div class="loading-card">Loading pharmacy catalog...</div>
+      </div>
+      <div class="inline-notice hidden" id="catalog-notice" role="status"></div>
+    </section>
+
+    <section class="section benefit-section" id="benefits">
+      <div class="shell benefit-grid">
+        <div>
+          <span class="eyebrow eyebrow-light">Connected coverage</span>
+          <h2>Know your benefits before checkout.</h2>
+          <p>Check plan eligibility and expected prescription copay through Caldova's secure member-benefits service.</p>
+          <div class="benefit-form">
+            <label for="member-id">Member ID</label>
+            <div>
+              <input id="member-id" value="1001" inputmode="numeric">
+              <button class="button button-light" id="check-benefits" type="button">Check coverage</button>
+            </div>
+          </div>
+        </div>
+        <div class="coverage-card" id="coverage-card" aria-live="polite">
+          <span class="status-chip">Ready to check</span>
+          <h3>Your plan details will appear here</h3>
+          <p>Enter your member ID to securely retrieve eligibility.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="prescriptions">
+      <div class="split-heading">
+        <div>
+          <span class="eyebrow">Prescription center</span>
+          <h2>Stay ahead of every refill</h2>
+        </div>
+        <p>One place to review medication status, coverage, pickup readiness, and payment activity.</p>
+      </div>
+      <div class="dashboard-grid">
+        <article class="dashboard-card prescription-card">
+          <div class="dashboard-card-head">
+            <span>Active prescription</span>
+            <span class="status-chip status-positive">On track</span>
+          </div>
+          <h3>Losartan 50 mg</h3>
+          <p>30-day supply · 2 refills remaining</p>
+          <div class="prescription-meta">
+            <div><small>Next refill</small><strong>Nov 8</strong></div>
+            <div><small>Pickup</small><strong>Westlake</strong></div>
+          </div>
+          <button class="text-button" id="pay-prescription" type="button">Review &amp; pay</button>
+        </article>
+        <article class="dashboard-card">
+          <div class="dashboard-card-head"><span>Order activity</span><span class="service-indicator" id="order-indicator"></span></div>
+          <h3 id="order-title">Checking recent orders</h3>
+          <p id="order-detail">Connecting to Caldova order services...</p>
+        </article>
+        <article class="dashboard-card">
+          <div class="dashboard-card-head"><span>Payment activity</span><span class="service-indicator" id="payment-indicator"></span></div>
+          <h3 id="payment-title">No recent prescription payment</h3>
+          <p id="payment-detail">Use Review &amp; pay on your active prescription when you are ready.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section services-section" id="services">
+      <div class="shell">
+        <div class="section-heading">
+          <div><span class="eyebrow">Care beyond the counter</span><h2>More ways to support your health</h2></div>
+        </div>
+        <div class="service-grid">
+          <article><span>01</span><h3>Vaccinations</h3><p>Seasonal vaccines with flexible scheduling.</p><a href="#">Explore care</a></article>
+          <article><span>02</span><h3>Medication review</h3><p>Talk one-to-one with a Caldova pharmacist.</p><a href="#">Book a review</a></article>
+          <article><span>03</span><h3>Wellness screening</h3><p>Simple checks that help you stay informed.</p><a href="#">See screenings</a></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-row">
+      <div class="brand brand-footer"><span class="brand-mark">C</span><span>Caldova <strong>Pharmacy</strong></span></div>
+      <p>Connected care for healthier days.</p>
+      <span>Hybrid pharmacy experience</span>
+    </div>
+  </footer>
+</body>
+</html>

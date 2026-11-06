@@ -1,6 +1,6 @@
 # Coldova Pharmacy Operations
 
-Coldova Pharmacy's multi-service prescription order processing platform for demonstrating governed Azure SRE Agent operations. It deploys five services with a database, message queue, and monitoring.
+Coldova Pharmacy's multi-service prescription and retail platform for demonstrating governed Azure SRE Agent operations. It deploys six Azure services with PostgreSQL, Service Bus, and a hybrid benefits dependency backed by SQL Server on the presenter's laptop.
 
 Supports two deployment modes: **standard** (public endpoints) and **VNet-integrated** (private, network-isolated).
 
@@ -19,6 +19,10 @@ All services have public endpoints. Simple to deploy and test.
                     │   App)         App)         App)            │
                     │                  │                          │
                     │                  ├──► Payment Service       │
+                    │                  ├──► Benefits Service      │
+                    │                  │        │ HTTPS           │
+                    │                  │        ▼                 │
+                    │                  │   On-prem SQL API        │
                     │                  │    (Container App)       │
                     │                  │                          │
                     │                  └──► Service Bus ──► Worker│
@@ -45,6 +49,7 @@ All services are inside a Virtual Network with no public endpoints. Azure Firewa
                     │  │                                          │       │
                     │  │  Frontend ──► Gateway ──► Order Service  │       │
                     │  │                  ├──► Payment Service    │       │
+                    │  │                  ├──► Benefits Service   │       │
                     │  │                  └──► Service Bus ──► Worker     │
                     │  └──────────────────────────────────────────┘       │
                     │                                                     │
@@ -76,7 +81,7 @@ All services are inside a Virtual Network with no public endpoints. Azure Firewa
 
 | Subnet | CIDR | Purpose | Delegation |
 |--------|------|---------|------------|
-| `snet-cae` | 10.0.0.0/21 | Container Apps Environment (all 5 services) | — |
+| `snet-cae` | 10.0.0.0/21 | Container Apps Environment (all 6 services) | — |
 | `snet-pe` | 10.0.10.0/24 | Private Endpoints (PostgreSQL) | — |
 | `AzureFirewallSubnet` | 10.0.11.0/26 | Azure Firewall | — (Azure-required name) |
 | `snet-sre-agent` | 10.0.12.0/28 | SRE Agent VNet connection | `Microsoft.App/environments` |
@@ -117,12 +122,45 @@ When VNet is enabled, Azure Firewall provides:
 | Frontend | Container App (Node.js) | User-facing web UI, routes to gateway |
 | Gateway | Container App (.NET) | Routes requests to backend services |
 | Order Service | Container App (.NET) | Creates orders, publishes to queue |
-| Payment Service | Container App (.NET) | Processes payments |
-| Benefits Service | Container App (.NET) | Provides the optional pharmacy-benefits eligibility lookup |
+| Payment Service | Container App (.NET) | Verifies prescription benefits and copay before processing payment |
+| Benefits Service | Container App (.NET) | Calls the authenticated on-premises SQL API for eligibility and catalog data |
 | Worker | Container App (.NET) | Consumes queue, completes orders |
 | Database | PostgreSQL Flexible Server | Shared order + payment data |
 | Service Bus | Standard tier | Async order processing pipeline |
 | Monitoring | Log Analytics + App Insights | Telemetry from all services |
+
+## Hybrid SQL Server dependency
+
+The benefits service always retrieves member eligibility and product catalog
+data from SQL Server running on the presenter's laptop. When a customer selects
+**Review & pay** for an active prescription, the payment service must retrieve
+that eligibility and copay before processing the charge. SQL Server remains
+bound to `127.0.0.1:1433`; an authenticated HTTPS endpoint exposes only the
+configured Data API Builder REST and read-only MCP surfaces.
+
+The laptop also hosts the read-only SQL Server MCP endpoint and a GitHub MCP
+endpoint. Both are protected by the same authenticated HTTPS proxy:
+
+```text
+Azure application -> authenticated HTTPS tunnel -> SQL REST API -> SQL Server
+Azure SRE Agent  -> authenticated HTTPS tunnel -> SQL and GitHub MCP tools
+```
+
+Azure Monitor evaluates customer-impacting prescription payment failures. The
+neutral `Caldova Sev2 Alert` enters the SRE Agent through its native Azure
+Monitor incident platform. The response plan routes it to the evidence-led
+incident responder. The responder receives no expected dependency, symptom,
+root-cause, or remediation instructions.
+
+Start the laptop services and outbound HTTPS tunnel:
+
+```bash
+./onprem-sql/scripts/start-onprem.sh
+./onprem-sql/scripts/start-tunnels.sh
+```
+
+See `onprem-sql/README.md` for the transaction sequence, alert flow, guarded
+approval-based recovery tool, and manual recovery command.
 
 ## Deploy
 

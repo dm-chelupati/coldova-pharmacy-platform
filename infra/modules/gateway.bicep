@@ -9,6 +9,7 @@ param acrPassword string
 param aiConnStr string
 param orderServiceUrl string
 param paymentServiceUrl string
+param benefitsServiceUrl string
 param dtEnvVars array = []
 param dtSecrets array = []
 
@@ -38,6 +39,7 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
             { name: 'APPLICATIONINSIGHTS_CONNECTION_STRING', value: aiConnStr }
             { name: 'ORDER_SERVICE_URL', value: orderServiceUrl }
             { name: 'PAYMENT_SERVICE_URL', value: paymentServiceUrl }
+            { name: 'BENEFITS_SERVICE_URL', value: benefitsServiceUrl }
           ], dtEnvVars)
         }
       ]

@@ -8,6 +8,7 @@ param acrName string
 param acrPassword string
 param aiConnStr string
 param dbConnStr string
+param benefitsServiceUrl string
 param dtEnvVars array = []
 param dtSecrets array = []
 
@@ -37,6 +38,8 @@ resource app 'Microsoft.App/containerApps@2024-03-01' = {
           env: concat([
             { name: 'APPLICATIONINSIGHTS_CONNECTION_STRING', value: aiConnStr }
             { name: 'DATABASE_URL', secretRef: 'db-conn' }
+            { name: 'BENEFITS_API_URL', value: benefitsServiceUrl }
+            { name: 'BENEFITS_MEMBER_ID', value: '1001' }
           ], dtEnvVars)
         }
       ]

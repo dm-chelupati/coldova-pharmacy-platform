@@ -19,6 +19,12 @@
     },
     "enableVnet": {
       "value": "${enableVnet=true}"
+    },
+    "onPremSqlApiUrl": {
+      "value": "${onPremSqlApiUrl}"
+    },
+    "onPremSqlApiToken": {
+      "value": "${onPremSqlApiToken}"
     }
   }
 }

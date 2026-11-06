@@ -3,8 +3,8 @@ metadata:
   template: coldova-pharmacy-platform@1.0.0
 
 # Multi-service order processing platform
-# Frontend (App Service) → Gateway (Container App) → Order Service → Payment Service → Worker
-# PostgreSQL for data, Service Bus for async processing
+# Frontend → Gateway → Order, Payment, and Benefits Services → Worker
+# PostgreSQL for orders/payments, hybrid SQL Server for benefits, Service Bus for async processing
 # All services emit telemetry to Log Analytics + App Insights
 
 services:
@@ -25,6 +25,11 @@ services:
 
   payment-service:
     project: ./payment-service
+    language: dotnet
+    host: containerapp
+
+  benefits-service:
+    project: ./benefits-service
     language: dotnet
     host: containerapp
 
