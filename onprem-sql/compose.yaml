@@ -1,0 +1,127 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64
+    container_name: caldova-onprem-sql
+    hostname: caldova-onprem-sql
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Set MSSQL_SA_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:1433:1433"
+    volumes:
+      - caldova_sql_data:/var/opt/mssql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          SQLCMD=$$(command -v /opt/mssql-tools18/bin/sqlcmd ||
+          command -v /opt/mssql-tools/bin/sqlcmd);
+          "$$SQLCMD" -S localhost -U sa -P "$$MSSQL_SA_PASSWORD"
+          -C -Q "SELECT 1" -b -o /dev/null
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+    restart: unless-stopped
+
+  sql-mcp:
+    image: mcr.microsoft.com/azure-databases/data-api-builder:latest
+    platform: linux/amd64
+    container_name: caldova-sql-mcp
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      MSSQL_CONNECTION_STRING: >-
+        Server=sqlserver,1433;Database=CaldovaBenefits;
+        User ID=caldova_sre_reader;Password=${SRE_READER_PASSWORD};
+        Encrypt=True;TrustServerCertificate=True;Connect Timeout=5;
+        Application Name=caldova-sql-mcp
+    volumes:
+      - ./mcp/dab-config.json:/App/dab-config.json:ro
+    restart: unless-stopped
+
+  benefits-api:
+    image: mcr.microsoft.com/azure-databases/data-api-builder:latest
+    platform: linux/amd64
+    container_name: caldova-benefits-api
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      MSSQL_CONNECTION_STRING: >-
+        Server=sqlserver,1433;Database=CaldovaBenefits;
+        User ID=caldova_benefits_app;Password=$BENEFITS_APP_PASSWORD;
+        Encrypt=True;TrustServerCertificate=True;Connect Timeout=5;
+        Application Name=caldova-benefits-api
+    volumes:
+      - ./mcp/app-dab-config.json:/App/dab-config.json:ro
+    restart: unless-stopped
+
+  sql-automation-mcp:
+    image: mcr.microsoft.com/azure-databases/data-api-builder:latest
+    platform: linux/amd64
+    container_name: caldova-sql-automation-mcp
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      MSSQL_CONNECTION_STRING: >-
+        Server=sqlserver,1433;Database=CaldovaBenefits;
+        User ID=caldova_sre_automation;Password=${SRE_AUTOMATION_PASSWORD:?Set SRE_AUTOMATION_PASSWORD in .env};
+        Encrypt=True;TrustServerCertificate=True;Connect Timeout=5;
+        Application Name=caldova-sql-automation-mcp
+    volumes:
+      - ./mcp/automation-dab-config.json:/App/dab-config.json:ro
+    restart: unless-stopped
+
+  github-mcp:
+    image: ghcr.io/github/github-mcp-server:latest
+    container_name: caldova-github-mcp
+    command:
+      - http
+    restart: unless-stopped
+
+  mcp-auth-proxy:
+    build:
+      context: ./mcp/proxy
+    container_name: caldova-sql-mcp-auth-proxy
+    depends_on:
+      - sql-mcp
+      - benefits-api
+      - sql-automation-mcp
+      - github-mcp
+    environment:
+      MCP_TARGET: http://sql-mcp:5000
+      APP_API_TARGET: http://benefits-api:5000
+      AUTOMATION_MCP_TARGET: http://sql-automation-mcp:5000
+      MCP_BEARER_TOKEN: ${MCP_BEARER_TOKEN}
+      GITHUB_MCP_TARGET: http://github-mcp:8082
+      GITHUB_PERSONAL_ACCESS_TOKEN: ${GITHUB_PERSONAL_ACCESS_TOKEN:?Set GITHUB_PERSONAL_ACCESS_TOKEN in .env}
+    ports:
+      - "127.0.0.1:8088:8080"
+    restart: unless-stopped
+
+  nightly-sync:
+    build:
+      context: ./nightly-sync
+    container_name: caldova-nightly-benefits-sync
+    profiles:
+      - fault-injection
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      SQL_SERVER: sqlserver
+      SQL_DATABASE: CaldovaBenefits
+      SQL_USER: caldova_nightly_benefits_sync
+      SQL_PASSWORD: ${NIGHTLY_SYNC_PASSWORD:?Set NIGHTLY_SYNC_PASSWORD in .env}
+      SQL_APPLICATION_NAME: caldova-nightly-benefits-sync
+      MEMBER_ID: "1001"
+    restart: "no"
+
+volumes:
+  caldova_sql_data:
+    name: caldova-onprem-sql-data

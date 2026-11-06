@@ -1,0 +1,18 @@
+{
+  "name": "caldova-nightly-benefits-sync",
+  "private": true,
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node runner.js"
+  },
+  "dependencies": {
+    "mssql": "^12.7.13"
+  },
+  "overrides": {
+    "@azure/identity": "4.14.1",
+    "@azure/msal-node": "7.2.0"
+  }
+}

@@ -19,6 +19,13 @@ param dtApiToken string = ''
 @description('Enable VNet integration for all services')
 param enableVnet bool = true
 
+@description('HTTPS endpoint for the on-premises SQL API.')
+param onPremSqlApiUrl string
+
+@description('Bearer token for the on-premises SQL API.')
+@secure()
+param onPremSqlApiToken string
+
 var tags = { 'azd-env-name': environmentName }
 var rgName = 'rg-${environmentName}'
 var suffix = uniqueString(subscription().subscriptionId, rgName)
@@ -116,6 +123,27 @@ module containerEnv 'modules/container-env.bicep' = {
     caeSubnetId: enableVnet ? vnet.outputs.caeSubnetId : '' }
 }
 
+// ── Benefits Service (Container App — hybrid SQL Server dependency) ──
+
+module benefitsService 'modules/benefits-service.bicep' = {
+  name: 'benefits-service'
+  scope: rg
+  params: {
+    location: location
+    suffix: suffix
+    tags: tags
+    envId: containerEnv.outputs.envId
+    acrServer: registry.outputs.acrLoginServer
+    acrName: registry.outputs.acrName
+    acrPassword: registry.outputs.acrPassword
+    aiConnStr: monitoring.outputs.aiConnStr
+    onPremSqlApiUrl: onPremSqlApiUrl
+    onPremSqlApiToken: onPremSqlApiToken
+    dtEnvVars: dtEnvVars
+    dtSecrets: dtSecrets
+  }
+}
+
 // ── Frontend (Container App — user-facing web UI) ──
 
 module frontend 'modules/frontend.bicep' = {
@@ -152,6 +180,7 @@ module gateway 'modules/gateway.bicep' = {
     aiConnStr: monitoring.outputs.aiConnStr
     orderServiceUrl: orderService.outputs.url
     paymentServiceUrl: paymentService.outputs.url
+    benefitsServiceUrl: benefitsService.outputs.url
     dtEnvVars: dtEnvVars
     dtSecrets: dtSecrets
   }
@@ -193,6 +222,7 @@ module paymentService 'modules/payment-service.bicep' = {
     acrPassword: registry.outputs.acrPassword
     aiConnStr: monitoring.outputs.aiConnStr
     dbConnStr: database.outputs.connStr
+    benefitsServiceUrl: benefitsService.outputs.url
     dtEnvVars: dtEnvVars
     dtSecrets: dtSecrets
   }
@@ -224,6 +254,7 @@ module worker 'modules/worker-service.bicep' = {
 output RESOURCE_GROUP string = rg.name
 output FRONTEND_URL string = frontend.outputs.url
 output GATEWAY_URL string = gateway.outputs.url
+output BENEFITS_SERVICE_URL string = benefitsService.outputs.url
 output AI_NAME string = monitoring.outputs.aiName
 output ACR_NAME string = registry.outputs.acrName
 output ACR_LOGIN_SERVER string = registry.outputs.acrLoginServer

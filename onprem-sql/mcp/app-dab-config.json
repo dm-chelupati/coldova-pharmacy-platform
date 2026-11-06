@@ -1,0 +1,44 @@
+{
+  "$schema": "https://github.com/Azure/data-api-builder/releases/latest/download/dab.draft.schema.json",
+  "data-source": {
+    "database-type": "mssql",
+    "connection-string": "@env('MSSQL_CONNECTION_STRING')"
+  },
+  "runtime": {
+    "rest": {
+      "enabled": true
+    },
+    "graphql": {
+      "enabled": false
+    },
+    "host": {
+      "mode": "production"
+    }
+  },
+  "entities": {
+    "MemberBenefits": {
+      "source": "dbo.MemberBenefits",
+      "description": "Member prescription eligibility and plan details from the Caldova benefits database.",
+      "permissions": [
+        {
+          "actions": [
+            "read"
+          ],
+          "role": "anonymous"
+        }
+      ]
+    },
+    "PharmacyProducts": {
+      "source": "dbo.PharmacyProducts",
+      "description": "Pharmacy catalog availability from the Caldova benefits database.",
+      "permissions": [
+        {
+          "actions": [
+            "read"
+          ],
+          "role": "anonymous"
+        }
+      ]
+    }
+  }
+}

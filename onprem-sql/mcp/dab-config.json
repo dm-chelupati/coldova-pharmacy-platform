@@ -1,0 +1,87 @@
+{
+  "$schema": "https://github.com/Azure/data-api-builder/releases/latest/download/dab.draft.schema.json",
+  "data-source": {
+    "database-type": "mssql",
+    "connection-string": "@env('MSSQL_CONNECTION_STRING')"
+  },
+  "runtime": {
+    "rest": {
+      "enabled": true
+    },
+    "graphql": {
+      "enabled": false
+    },
+    "host": {
+      "mode": "production"
+    },
+    "mcp": {
+      "enabled": true,
+      "path": "/mcp",
+      "allowed-hosts": [
+        "sql-mcp",
+        "localhost",
+        "127.0.0.1"
+      ],
+      "dml-tools": {
+        "describe-entities": true,
+        "create-record": false,
+        "read-records": true,
+        "update-record": false,
+        "delete-record": false,
+        "execute-entity": false,
+        "aggregate-records": true
+      }
+    }
+  },
+  "entities": {
+    "MemberBenefits": {
+      "source": "dbo.MemberBenefits",
+      "description": "Member prescription eligibility and plan details from the Caldova benefits database.",
+      "permissions": [
+        {
+          "actions": [
+            "read"
+          ],
+          "role": "anonymous"
+        }
+      ],
+      "mcp": {
+        "dml-tools": true
+      }
+    },
+    "PharmacyProducts": {
+      "source": "dbo.PharmacyProducts",
+      "description": "Pharmacy catalog availability from the Caldova benefits database.",
+      "permissions": [
+        {
+          "actions": [
+            "read"
+          ],
+          "role": "anonymous"
+        }
+      ],
+      "mcp": {
+        "dml-tools": true
+      }
+    },
+    "GetOperationsTransactionActivity": {
+      "source": {
+        "object": "dbo.GetOperationsTransactionActivity",
+        "type": "stored-procedure"
+      },
+      "description": "Returns current SQL transaction age, lock waits, and waiting application sessions for operations investigation.",
+      "permissions": [
+        {
+          "actions": [
+            "execute"
+          ],
+          "role": "anonymous"
+        }
+      ],
+      "mcp": {
+        "dml-tools": false,
+        "custom-tool": true
+      }
+    }
+  }
+}
